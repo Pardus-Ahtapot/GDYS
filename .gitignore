@@ -1,0 +1,11 @@
+*.tar,gz
+*.dsc
+*.changes
+*.deb
+*/debian/*.debhelper.log
+*/debian/files
+*/debian/*.substvars
+*/debian/debhelper-build-stamp
+ahtapot-gdys-gui/debian/ahtapot-gdys-gui/
+ahtapot-gkts/debian/ahtapot-gkts/
+ahtapot-lkk/debian/ahtapot-lkk/
