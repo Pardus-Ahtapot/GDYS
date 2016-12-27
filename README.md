@@ -1,1 +1,1 @@
-# GDYS
+# Güvenlik Duvarı Yönetim Sistemi
