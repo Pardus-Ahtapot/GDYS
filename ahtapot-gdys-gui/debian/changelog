@@ -1,0 +1,13 @@
+ahtapot-gdys-gui (1.1.1) unstable; urgency=low
+  
+  * Initial release (Closes: #1)  <0 is the predecessor version number>
+    AHTAPOT GDYS-GUI v1.1.1
+    Man sayfasi duzenlendi.
+    AHTAPOT GDYS-GUI v1.1.0
+    Fwbuilder ile girilen kurallardaki zaman damgalarina "--kerneltz" parametresi eklendi.
+    AHTAPOT GDYS-GUI v1.0.10
+    Herhangi bir makinada acik olan uygulamayi kullanan kullanicinin bilgisi gosterildi.
+    Herhangi bir makinada acik olan uygulamayi sonlandirma ozelligi eklendi
+    Merge Request mesajlarinda ahtapotops yerine kullanici bilgisinin gosterilmesi saglandi.
+    Bug#1267: Hic bir degisiklik yapmadan sadece "install" islemi yapildiginda, uyari verilerek islemin gonderilmesi engellendi.
+

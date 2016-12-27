@@ -1,0 +1,16 @@
+Source: ahtapot-gdys-gui
+Section: base
+Priority: optional
+Maintainer: Volkan DELIOGLU <volkan.delioglu@pardus.org.tr>, Ugur CIL <ugur.cil@pardus.org.tr>    
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://github.com/Pardus-Ahtapot/GDYS/tree/master/ahtapot-gdys-gui
+
+Package: ahtapot-gdys-gui
+Architecture: all
+Depends: python (>= 2.7), python (<< 2.8)
+Description: Ahtapot Guvenlik Duvari Yonetim Sistemi Arayuzu
+ Ahtapot sistemi kapsaminda, guvenlik duvarlarinin merkezi yonetim
+ sistemine dahil ederek yonetilmesini saglayan bu arayuz, 
+ Firewall Builder uygulamasinin on tarafinda calisarak surum 
+ takip ve merkezi yonetim sistemi ile entegrasyonu saglamaktadir.

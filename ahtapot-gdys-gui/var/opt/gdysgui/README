@@ -1,0 +1,9 @@
+1-) Download Source Code and Extract it
+2-) Start fwbuilder-bsgs.py with X-Forwarding
+3-) Open Config Settings from Menu
+4-) Unlock the settings
+5-) Set Path Configs and Gitlab Configs ( Default Repo Path is /etc/fw/firewall/, you have to change it if u use any other from config.ini)
+6-) Save Configs
+7-) Turn Back to Main Window
+8-) Start using it by starting Firewall Builder
+9-) Change rules and Compile&Install it
