@@ -1,0 +1,15 @@
+ahtapot-lkk (1.1.7) unstable; urgency=low
+
+  * Initial release (Closes: #1)  <0 is the predecessor version number>
+    AHTAPOT-LKK v1.1.7
+    Man sayfasi  duzenlendi.
+    AHTAPOT-LKK v1.1.6
+    Kullanicidan alinan girdilerin filtrelemesi gelistirilerek shell komutlari calistirmasi onlendi.
+    Bmon uygulamasinin kullanilmasi saglandi.
+    Menude secili kismin rengi beyaz ustune siyah yazi olarak gorulebilirligi saglandi.
+    Son kullanciya yonelik aciklamalarda gelistirmeler yapildi.
+    Son kullanciya yonelik aciklamalarda gelistirmeler yapildi.
+    Ahtapot yazisindaki kayma giderildi.
+    arp komutu less komutu ile calistirilarak etkilesimli kullanilmasi saglandi.
+    tail komutu egrep ile calistirilarak filtreleme saglandi.
+

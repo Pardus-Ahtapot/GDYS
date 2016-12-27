@@ -1,0 +1,10 @@
+#! /bin/bash
+# postinst script
+
+chmod 750 /var/opt/ahtapot-lkk/ahtapot-lkk.py
+chown lkk:lkk /var/opt/ahtapot-lkk/ahtapot-lkk.py
+
+touch /var/log/ahtapot/ahtapot-lkk.log
+chown lkk:lkk /var/log/ahtapot/ahtapot-lkk.log
+
+exit 0

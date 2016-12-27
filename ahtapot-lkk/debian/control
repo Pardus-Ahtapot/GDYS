@@ -1,0 +1,15 @@
+Source: ahtapot-lkk
+Section: base
+Priority: optional
+Maintainer: Volkan DELIOGLU <volkan.delioglu@pardus.org.tr>, Ugur CIL <ugur.cil@pardus.org.tr>    
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://github.com/Pardus-Ahtapot/GDYS/tree/master/ahtapot-lkk
+
+Package: ahtapot-lkk
+Architecture: all
+Depends: python (>= 2.7), python (<< 2.8), sudo, less, gzip, mtr-tiny, iptstate, net-tools, iptraf, bmon
+Description: Ahtapot Limitli Kullanici Konsolu
+ Kisitli hakka sahip kullanicilarin lokasyonlardaki GDYS cihazlarinda shelle 
+ dusmeden iptraf gibi araclar ile troubleshoot edilmesi icin olusturulmus 
+ uygulamadir.
