@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}
+<title>GKTS-Kurallar</title>
+{% endblock %}
+{% block content %}
+    {% if message %}
+    <b>Mesaj : </b>{{message}}
+    {% endif %}
+    <table border="1" align="center" class="dmrTable">
+    <tr>
+        <td align="right">
+            <b>GÜVENLİK DUVARI</b>
+        </td>
+        <td align="center">
+            <b>KAYNAK</b>
+        </td>
+        <td align="center">
+            <b>HEDEF</b>
+        </td>
+        <td align="right">
+            <b>HEDEF PORT</b>
+        </td>
+        <td align="right">
+            <b>PROTOKOL</b>
+        </td>
+        <td align="right">
+            <b>SÜRE</b>
+        </td>
+        <td align="right">
+            <b>AÇIKLAMA</b>
+        </td>
+        <td>
+            <b>İşlemler</b>
+        </td>
+    </tr>
+    {% for rule in rules %}
+
+        <tr>
+        <form method="POST" action="/rule/activate/ ">
+            {% csrf_token %}
+            <input type="hidden" name="ruleId" id="requestId" value="{{rule.id}}" />
+                    <td align="center">
+                        {{rule.fqdn}}
+                    </td>
+                    <td align="center">
+                        {{rule.source}}
+                    </td>
+                    <td align="right">
+                        {{rule.destination}}
+                    </td>
+                    <td align="right">
+                        {{rule.destination_port}}
+                    </td>
+                    <td align="right">
+                        {{rule.protocol}}
+                    </td>
+                    <td align="right">
+                        {{rule.time}}
+                    </td>
+                    <td align="right">
+                        {{rule.definition}}
+                    </td>
+                    {% if rule in active_rules %}
+                    <td align="right">
+                        &nbsp<input type="button" value="ŞUAN AKTİF" class="btn btn-warning"/>
+                    </td>
+                    {% else %}
+                    <td align="right">
+                        &nbsp<input type="submit" value="AKTİF ET" class="btn btn-success"/>
+                    </td>
+                    {% endif %}
+                    </td>
+        </form>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

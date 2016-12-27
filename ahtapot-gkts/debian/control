@@ -1,0 +1,16 @@
+Source: ahtapot-gkts
+Section: base
+Priority: optional
+Maintainer: Volkan DELIOGLU <volkan.delioglu@pardus.org.tr>, Ugur CIL <ugur.cil@pardus.org.tr>    
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://github.com/Pardus-Ahtapot/GDYS/tree/master/ahtapot-gkts
+
+Package: ahtapot-gkts
+Architecture: all
+Depends: python (>= 2.7), python (<< 2.8)
+Description: Ahtapot Gecici Kural Tanimlama Sistemi
+ Ahtapot GKTS uygulamasi onceden IP adresi belirlenmis bir bilgisayarin,
+ guvenlik duvarlari arkasinda bulunan ve IP adresi bilinen servislere
+ zaman kisitli erisim saglamak islemini onay gerektirmeksizin
+ gerceklestirir.

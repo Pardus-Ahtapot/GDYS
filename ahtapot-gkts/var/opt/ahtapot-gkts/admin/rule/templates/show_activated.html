@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}
+<title>GKTS-Aktif Edilmiş Kurallar</title>
+{% endblock %}
+{% block content %}
+    {% if message %}
+    <b>Mesaj : </b>{{message}}
+    {% endif %}
+    {% if button %}
+    <form method="POST" action="/rule/active/">
+        {% csrf_token %}
+        <input type="submit" value="Şuan Aktif Olanları Göster" class="btn btn-info" align="right"/>
+    </form>
+    {% endif %}
+    <table border="1" align="center" class="dmrTable">
+    <tr>
+        <td align="right">
+            <b>GÜVENLİK DUVARI</b>
+        </td>
+        <td align="center">
+            <b>KAYNAK</b>
+        </td>
+        <td align="center">
+            <b>HEDEF</b>
+        </td>
+        <td align="right">
+            <b>HEDEF PORT</b>
+        </td>
+        <td align="right">
+            <b>PROTOKOL</b>
+        </td>
+        <td align="right">
+            <b>SÜRE</b>
+        </td>
+        <td align="right">
+            <b>AKTİF EDİLME TARİHİ</b>
+        </td>
+        <td align="right">
+            <b>GEÇERSİZ OLACAĞI TARİH</b>
+        </td>
+    </tr>
+    {% for a_rule in rules %}
+
+        <tr>
+            <td align="center">
+                {{a_rule.rule.fqdn}}
+            </td>
+            <td align="center">
+                {{a_rule.rule.source}}
+            </td>
+            <td align="right">
+                {{a_rule.rule.destination}}
+            </td>
+            <td align="right">
+                {{a_rule.rule.destination_port}}
+            </td>
+            <td align="right">
+                {{a_rule.rule.protocol}}
+            </td>
+            <td align="right">
+                {{a_rule.rule.time}}
+            </td>
+            <td align="right">
+                {{a_rule.operated_at}}
+            </td>
+            <td align="right">
+                {{a_rule.active_until}}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

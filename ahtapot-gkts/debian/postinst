@@ -1,0 +1,13 @@
+#! /bin/bash
+# Ahtapot-gkts postinst script
+
+gktsOwner="ahtapotops"
+fileDirectory="/var/opt/ahtapot-gkts"
+
+if [ -d  "$fileDirectory" ];
+then
+        mkdir -p "$fileDirectory"
+        chown -R $gktsOwner:$gktsOwner "$fileDirectory"
+fi
+
+exit 0

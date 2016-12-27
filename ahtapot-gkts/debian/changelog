@@ -1,0 +1,12 @@
+ahtapot-gkts (1.0.7) unstable; urgency=low
+
+  * Initial release (Closes: #1)  <0 is the predecessor version number>
+    
+    AHTAPOT-GKTS v1.0.7
+    Man sayfasi duzenlendi.
+    AHTAPOT-GKTS v1.0.6
+    Kural ekleme sayfasinda, alanlarla ilgili bilgiler eklendi.
+    Kural ekleme kismina, aciklama alani eklendi.
+    Kurallari listeleme ekranindaki tarihler daha aciklayici hale getirildi.
+    O an aktif olan kuralin "Aktif Et" butonu yerine "Suan Aktif" renkli butonuyla degistirildi ve pasiflestirildi.
+
