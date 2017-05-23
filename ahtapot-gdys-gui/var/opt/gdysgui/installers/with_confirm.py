@@ -48,9 +48,12 @@ def add_kerneltz(folder_path, file_name):
     try:
         cp_file = folder_path + file_name + ".tmp"
         org_file = folder_path + file_name
-        sed_cmd = "sed \"s/ -m time / -m time --kerneltz /g\" " + org_file + " > " + cp_file + " ; mv " + cp_file + \
+        p = subprocess.Popen(["grep","m time --kerneltz",org_file], stdout=subprocess.PIPE)
+        out, err = p.communicate()
+        if len(out) == 0:
+            sed_cmd = "sed \"s/ -m time / -m time --kerneltz /g\" " + org_file + " > " + cp_file + " ; mv " + cp_file + \
                   " " + org_file
-        subprocess.call([sed_cmd], shell=True)
+            subprocess.call([sed_cmd], shell=True)
     except Exception as e:
         filelogger.send_log("error"," while adding --kerneltz parameter : "+str(e))
 
