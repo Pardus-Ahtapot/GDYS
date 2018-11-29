@@ -1,3 +1,7 @@
+ahtapot-gdys-gui (1.1.2) unstable; urgency=low
+
+  * Firewall nesneleri yazilabilir veya sadece okunabilir olmasi icin ozellik eklendi
+
 ahtapot-gdys-gui (1.1.1) unstable; urgency=low
   
   * Initial release (Closes: #1)  <0 is the predecessor version number>
