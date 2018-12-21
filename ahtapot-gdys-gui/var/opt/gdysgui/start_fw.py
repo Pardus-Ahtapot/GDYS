@@ -27,7 +27,7 @@ def start_fwbuilder(git):
     else:
         change_file_mod = "chmod 444 " + run_fwb
         subprocess.call([change_file_mod],shell=True)
-    subprocess.Popen(["/var/opt/gdysgui/seteditable.py", run_fwb])
+    subprocess.Popen(["/var/opt/gdysgui/seteditable.py", run_fwb, "run"])
 
     subprocess.Popen(["fwbuilder", "-f",run_fwb])
 
@@ -57,8 +57,7 @@ def start_fwbuilder_temp():
     cmd_git_check_file = "cd /tmp/" + project_name + " && git checkout "+master_branch+" -- " + file_name
     subprocess.call([cmd_git_branch],shell=True)
     subprocess.call([cmd_git_check_file],shell=True)
-    subprocess.Popen(["/var/opt/gdysgui/seteditable.py", run_fwb])
-
+    subprocess.Popen(["/var/opt/gdysgui/seteditable.py", run_fwb, "run"])
     change_file_mod = "chmod 444 " + run_fwb
     subprocess.call([change_file_mod],shell=True)
 
