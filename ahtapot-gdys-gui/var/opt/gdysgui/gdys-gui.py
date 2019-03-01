@@ -9,7 +9,7 @@ import gitlab_check as GC
 import config_parser as CP
 import os
 import time
-
+import subprocess
 
 class MovieSplashScreen(QtGui.QSplashScreen):
      def __init__(self, movie, parent = None):
@@ -125,4 +125,7 @@ if __name__ == "__main__":
     ui_start.filelogger.send_log("info"," GUI Started")
     FwStartWindow.show()
     splash.finish(ui_start)
-    sys.exit(app.exec_())
+    ret = app.exec_()
+    subprocess.Popen(["/var/opt/gdysgui/seteditable.py", "/etc/fw/gdys/gdys.fwb", "revert"])
+    sys.exit(ret)
+
