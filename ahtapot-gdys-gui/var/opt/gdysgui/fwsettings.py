@@ -551,7 +551,7 @@ class Ui_FwSettingsWindow(QtGui.QWidget):
             child.close()
         except Exception as exc_err:
             child.close()
-            print ("Error authenticating. Reason: "%(exc_err))
+            print ("Error authenticating. Reason: "+str(exc_err))
             self.logger.send_log("error","error found while attempting to login to unlock\n"+str(exc_err))
             self.filelogger.send_log("error","error found while attempting to login to unlock\n"+str(exc_err))
             return False
