@@ -17,6 +17,8 @@ from dmrlogger import Syslogger
 from dmrlogger import Filelogger
 import pexpect
 
+MAX_WAIT_TIME_FOR_PAM_TO_EXIT=10
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -545,9 +547,15 @@ class Ui_FwSettingsWindow(QtGui.QWidget):
     def pam_login(self,username, password):
         try:
             child = pexpect.spawn('/bin/su - %s'%(username))
-            child.expect('Password:')
-            child.sendline(password)
-            result=child.expect(['su: Authentication failure',username])
+            # wait until it request input or finishes,
+            # 10 sec seem to be log enough?
+            child.waitnoecho(MAX_WAIT_TIME_FOR_PAM_TO_EXIT)
+            if child.isalive():
+                child.sendline(password)
+                result=child.expect(['su: Authentication failure',username])
+            else:
+                result = 1  # user was asked no pwd
+            # TODO: check exit code
             child.close()
         except Exception as exc_err:
             child.close()
