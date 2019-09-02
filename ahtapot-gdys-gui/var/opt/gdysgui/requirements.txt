@@ -1,2 +1,2 @@
-pexpect==4.0.1
-requests==2.4.3
+pexpect
+requests
