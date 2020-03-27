@@ -56,6 +56,53 @@ def add_kerneltz(folder_path, file_name):
     except Exception as e:
         filelogger.send_log("error"," while adding --kerneltz parameter : "+str(e))
 
+def git_stuffs(fw_path, gitlab_user, gitlab_pass, gitlab_url, gitlab_confirm_branch, gitlab_master_branch, gitlab_project_id, ssh_rm_script_cmd = ""):
+
+    print u"Bilgiler uzak git sunucusuna aktariliyor"
+    git = GC.gitlab_connect(gitlab_url,gitlab_user,gitlab_pass)
+
+    if GC.check_mergerequest(git,gitlab_project_id) == False:
+        print u"Onay bekleyen bir yapilandirma mevcut\nLutfen daha sonra tekrar deneyiniz..."
+        filelogger.send_log("error"," found a merge request while installing")
+        sleep(5)
+        start_fw.kill_fw()
+    else:
+        #check if git runs correctly
+        if ahtapot_utils.check_git_status(fw_path)==False:
+            print "Git ile ilgili bir hata mevcut, 'git status' komutuyla kontrol ediniz."
+            filelogger.send_log("error"," there is an error about git path")
+            sleep(5)
+            start_fw.kill_fw()
+
+        if ahtapot_utils.check_git_status(fw_path) != True:
+            #create commits for every modified file and push
+            date = datetime.strftime(datetime.now(),'%d/%m/%Y %H:%M:%S')
+            ahtapot_utils.commit_files(fw_path,ahtapot_utils.get_changed_files(fw_path),date,gitlab_confirm_branch)
+            filelogger.send_log("info"," committed and pushed changes to repo")
+
+            #Merge Request Comment and Createation
+            merge_name = str(date) + " <-> " + unicode(user)
+            GC.create_mergerequest(git,gitlab_project_id,gitlab_confirm_branch,gitlab_master_branch,str(merge_name))
+            #rm scripts on test machine
+            if not ssh_rm_script_cmd:
+                subprocess.call([ssh_rm_script_cmd],shell=True) #2
+            filelogger.send_log("info"," created merge request")
+            #create file for noticeing about merge request state
+            merge_file = open(full_path + "onay.dmr","a")
+            merge_file.write("1\n")
+            merge_file.close()
+            print u"Hatasiz Tamamlandi."
+            print u"Firewall Builder 15 saniye sonra kapanacaktir..."
+            sleep(15)
+            filelogger.send_log("info"," killed Firewall Builder after install")
+            start_fw.kill_fw()
+        else:
+            print u"Herhangi Bir Degisiklik Mevcut Degil."
+            print u"Firewall Builder 15 saniye sonra kapanacaktir..."
+            sleep(15)
+            filelogger.send_log("warning"," No Change and killed Firewall Builder")
+            start_fw.kill_fw()
+
 def main():
 
     #config for copying files
@@ -63,6 +110,7 @@ def main():
     fw_copy_path = CP.get_configs()['fw_copy_path']
     copy_fws = fw_copy_path + "*.fw"
     rm_fws = fw_copy_path + "cp_*"
+    poc_machine = CP.get_configs()['poc_machine'] if "poc_machine" in CP.get_configs() else "on"
     poc_ip = CP.get_configs()['poc_ip']
     poc_user = CP.get_configs()['poc_user']
     poc_copy_location = CP.get_configs()['poc_copy_location']
@@ -76,6 +124,10 @@ def main():
     gitlab_master_branch = CP.get_configs()['gitlab_master_branch']
     gitlab_project_id = int(CP.get_configs()['gitlab_project_id'])
 
+
+    if not poc_ip or poc_machine == "off":
+        print u"Test firewall yapilandirmasi yok. Geciliyor..."
+        git_stuffs(fw_path, gitlab_user, gitlab_pass, gitlab_url, gitlab_confirm_branch, gitlab_master_branch, gitlab_project_id)
 
 
     scp_cmd = check_port("scp "+ rm_fws + " " + poc_user + "@" + poc_ip + ":" + poc_copy_location, "scp")
@@ -123,7 +175,7 @@ def main():
                     continue
                 if re.search("check_file",line) and not re.search("{",line):
                     file_path = line.split(" \"")[2].split("\"")[0]
-                    file_list.append(file_path) # add to file list
+                    file_list.append(file_path) # add to file list
                 f_write.write(line)
                 i+=1
             f_write.close()
@@ -141,7 +193,7 @@ def main():
                 else:
                     ssh_cmd = check_port("ssh "+ poc_user + "@" + poc_ip + " \"sudo /bin/bash -c 'mkdir -p "+ dir_name + "'\"", "ssh")
                     subprocess.call([ssh_cmd],shell=True)
-                    subprocess.call([scp_cmd_file],shell=True) # copy black/white list files
+                    subprocess.call([scp_cmd_file],shell=True) # copy black/white list files
             except:
                 print "Gerekli Objeler Kopyalanirken hata olustu."
                 filelogger.send_log("error"," address tables or objects couldn't be sent to test machine")
@@ -198,49 +250,7 @@ def main():
         start_fw.kill_fw()
     else:
         filelogger.send_log("info"," scripts runned without error on test machine")
-
-        git = GC.gitlab_connect(gitlab_url,gitlab_user,gitlab_pass)
-
-        if GC.check_mergerequest(git,gitlab_project_id) == False:
-            print u"Onay bekleyen bir yapilandirma mevcut\nLutfen daha sonra tekrar deneyiniz..."
-            filelogger.send_log("error"," found a merge request while installing")
-            sleep(5)
-            start_fw.kill_fw()
-        else:
-            #check if git runs correctly
-            if ahtapot_utils.check_git_status(fw_path)==False:
-                print "Git ile ilgili bir hata mevcut, 'git status' komutuyla kontrol ediniz."
-                filelogger.send_log("error"," there is an error about git path")
-                sleep(5)
-                start_fw.kill_fw()
-
-            if ahtapot_utils.check_git_status(fw_path) != True:
-                #create commits for every modified file and push
-                date = datetime.strftime(datetime.now(),'%d/%m/%Y %H:%M:%S')
-                ahtapot_utils.commit_files(fw_path,ahtapot_utils.get_changed_files(fw_path),date,gitlab_confirm_branch)
-                filelogger.send_log("info"," committed and pushed changes to repo")
-
-                #Merge Request Comment and Createation
-                merge_name = str(date) + " <-> " + unicode(user)
-                GC.create_mergerequest(git,gitlab_project_id,gitlab_confirm_branch,gitlab_master_branch,str(merge_name))
-                #rm scripts on test machine
-                subprocess.call([ssh_rm_script_cmd],shell=True) #2
-                filelogger.send_log("info"," created merge request")
-                #create file for noticeing about merge request state
-                merge_file = open(full_path + "onay.dmr","a")
-                merge_file.write("1\n")
-                merge_file.close()
-                print u"Hatasiz Tamamlandi."
-                print u"Firewall Builder 15 saniye sonra kapanacaktir..."
-                sleep(15)
-                filelogger.send_log("info"," killed Firewall Builder after install")
-                start_fw.kill_fw()
-            else:
-                print u"Herhangi Bir Degisiklik Mevcut Degil."
-                print u"Firewall Builder 15 saniye sonra kapanacaktir..."
-                sleep(15)
-                filelogger.send_log("warning"," No Change and killed Firewall Builder")
-                start_fw.kill_fw()
+        git_stuffs(fw_path, gitlab_user, gitlab_pass, gitlab_url, gitlab_confirm_branch, gitlab_master_branch, gitlab_project_id, ssh_rm_script_cmd)
 
 
 if __name__=="__main__":
